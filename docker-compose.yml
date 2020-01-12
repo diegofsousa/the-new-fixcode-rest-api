@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  mongo:
+    container_name: mongo-service
+    image: mongo:4.0.13-xenial
+    environment:
+      MONGO_INITDB_DATABASE: fixCodeDoc
+      MONGO_INITDB_ROOT_USERNAME: fix_code_root
+      MONGO_INITDB_ROOT_PASSWORD: fix.mongo.123
+      TZ: America/Fortaleza
+    ports:
+      - "19200:27017"
+    volumes:
+      - db-data-mongodb:/data/db
+      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - datanodes-network
+
+  mongo-express:
+    container_name: mongo-express-web
+    image: mongo-express
+    ports:
+      - "20100:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: senha.123
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ADMINUSERNAME: fix_code_root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: fix.mongo.123
+    depends_on:
+      - mongo
+    networks:
+      - datanodes-network
+
+volumes:
+  db-data:
+  db-data-mongodb:
+
+networks:
+  datanodes-network:
+    driver: bridge
