@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'fixcode.user',
 
     # thirty apps
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'user.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
