@@ -14,6 +14,7 @@ import os
 
 # Thirty libs
 from decouple import config
+import mongoengine
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
 
     # apps
     'fixcode.user',
+    'fixcode.authorize',
+    'rest_framework_mongoengine',
 
     # thirty apps
     'easy_thumbnails',
@@ -136,3 +139,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
+
+
+mongoengine.connect(
+    db='fixCodeDoc',
+    host='mongodb://fix_code_root:fix.mongo.123@localhost:27017/?authSource=admin',
+)
