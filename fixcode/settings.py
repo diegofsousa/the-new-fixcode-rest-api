@@ -46,11 +46,13 @@ INSTALLED_APPS = [
     # apps
     'fixcode.user',
     'fixcode.authorize',
-    'rest_framework_mongoengine',
+    'fixcode.commons',
+    
 
     # thirty apps
     'easy_thumbnails',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_mongoengine',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +147,14 @@ mongoengine.connect(
     db='fixCodeDoc',
     host='mongodb://fix_code_root:fix.mongo.123@localhost:27017/?authSource=admin',
 )
+
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
