@@ -12,3 +12,6 @@ class FirstAccessSerializer(DocumentSerializer):
 	def validate_username(self, value):
 		_regex_validator('[^0-9a-zA-Z]', value)
 		return value
+
+class SecondAccessSerializer(serializers.Serializer):
+	password = serializers.CharField(max_length=100, required=True)

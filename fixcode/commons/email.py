@@ -1,15 +1,19 @@
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.template.loader import render_to_string
 
 # TODO: Refatore this
 
 def first_register_email(name, email, link):
-	email = EmailMessage(
-	    '[FixCode] - Podemos ativar sua conta agora?',
-	    'Olá {}, tudo bem? Para ativr a sua conta precisamos que você defina uma senha no link a seguir: {}'.format(name, link),
-	    settings.EMAIL_HOST_USER,
-	    [email,],
-	    [],
-	    headers={'Message-ID': 'FixCode'},
-	)
+
+	context = {
+		"name":name,
+		"link":link
+	}
+
+	EMAIL_TEMPLATE = render_to_string('accounts/email_verification.html', context)
+	SUBJECT = "Podemos ativar sua conta agora?"
+
+	email = EmailMessage(SUBJECT, EMAIL_TEMPLATE, settings.EMAIL_HOST_USER, [email,])
+	email.content_subtype = "html" 
 	email.send(fail_silently=False)
