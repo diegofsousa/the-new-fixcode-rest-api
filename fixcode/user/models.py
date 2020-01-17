@@ -3,8 +3,11 @@ from django.core import validators
 from django.contrib.auth.models import (
 	AbstractBaseUser, UserManager, PermissionsMixin
 )
-from easy_thumbnails.fields import ThumbnailerImageField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 import re
+from easy_thumbnails.fields import ThumbnailerImageField
+from fixcode.authorize.models import TemporalyDataUser
 
 class User(AbstractBaseUser, PermissionsMixin):
 
@@ -42,3 +45,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 	class Meta:
 		verbose_name = 'User'
 		verbose_name_plural = 'Users'
+
+	def first_name(self):
+		return self.name.split(" ")[0]
+
+	def __str__(self):
+		return self.name
+
+@receiver(post_save, sender=User, dispatch_uid="destroy_user_mongo_documents")
+def destroy_user_mongo_documents(sender, instance, **kwargs):
+	TemporalyDataUser.objects.filter(email=instance.email).delete()
