@@ -25,6 +25,9 @@ router.register(r'users', views.UserViewSet)
 
 urlpatterns = [
 	path('', include(router.urls)),
+    path('user/register/', include('fixcode.authorize.urls', namespace='authorize')),
 	path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls)
 ]
+
+urlpatterns = [path('api/v1.0/', include(urlpatterns))]

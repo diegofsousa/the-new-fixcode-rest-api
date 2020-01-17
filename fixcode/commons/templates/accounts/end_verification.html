@@ -1,0 +1,26 @@
+ 
+{% extends "accounts/public_layout.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Aêêê, {% endblock %}
+
+{% block content %}
+  <div>
+    <h1>Aêêê, {{ name }}!</h1>
+
+    {% url 'account_email' as email_url %}
+    <p>Opa {{ name }}, sua conta foi ativada com sucesso. Aproveite tudo o que sua plataforma tem de melhor!</p>
+
+    <a target="_blank" href="http://localhost:8000/">
+        Ir para o FixCode!
+    </a>
+
+    <br>
+
+    <p>
+        Atenciosamente, equipe FixCode.
+    </p>
+
+  </div>
+{% endblock %}

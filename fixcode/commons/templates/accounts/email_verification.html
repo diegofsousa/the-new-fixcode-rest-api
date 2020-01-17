@@ -1,0 +1,34 @@
+ 
+{% extends "accounts/public_layout.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Podemos ativar sua conta agora, Diego?{% endblock %}
+
+{% block content %}
+  <div>
+    <h1>Só mais um passo, {{ name }}... :D</h1>
+
+    {% url 'account_email' as email_url %}
+    <p>Olá {{ name }}, tudo bem? Para ativar a sua conta precisamos que você defina uma senha no nosso link a seguir:</p>
+
+    <a target="_blank" href="http://localhost:8000/api/v1.0/user/register/second-access/?link={{ link }}">
+        Ative agora seu registro!
+    </a>
+
+    <p>
+        Caso o link acima não funcione, copie e cole o trecho abaixo no seu navegador:
+        <br>
+        <a target="_blank" href="http://localhost:8000/api/v1.0/user/register/second-access/?link={{ link }}">
+        http://localhost:8000/api/v1.0/user/register/second-access/?link={{ link }}
+        </a>    
+    </p>
+
+    <br>
+
+    <p>
+        Atenciosamente, equipe FixCode.
+    </p>
+
+  </div>
+{% endblock %}
