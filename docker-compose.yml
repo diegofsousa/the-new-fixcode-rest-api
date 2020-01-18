@@ -33,6 +33,13 @@ services:
     networks:
       - datanodes-network
 
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - datanodes-network
+
 volumes:
   db-data:
   db-data-mongodb:

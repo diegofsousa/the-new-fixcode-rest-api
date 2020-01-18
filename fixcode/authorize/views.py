@@ -19,7 +19,7 @@ class FirstAccessView(generics.CreateAPIView):
 	def perform_create(self, serializer):
 		post_save_object = serializer.save()
 		name, email, link = post_save_object.first_name(), post_save_object.email, post_save_object.hash_for_link_activation
-		first_register_email(name, email, link)
+		first_register_email.delay(name, email, link)
 		print(name, email, link)
 
 class SecondAccessView(generics.GenericAPIView):
@@ -52,6 +52,6 @@ class SecondAccessView(generics.GenericAPIView):
 			mongo_pass_to_postgres = temp_user_to_persist_user(filter_temp_user_by_token.first(),
 															   serializer_persist_pass.data["password"])
 			serializer_data_user_persist = SimpleUserSerializer(mongo_pass_to_postgres)
-			end_register_email(mongo_pass_to_postgres.name,
+			end_register_email.delay(mongo_pass_to_postgres.name,
 								mongo_pass_to_postgres.email)
 			return Response(serializer_data_user_persist.data)

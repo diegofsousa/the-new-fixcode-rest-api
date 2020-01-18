@@ -1,7 +1,9 @@
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+from celery import shared_task
 
+@shared_task
 def first_register_email(name, email, link):
 
 	context = {
@@ -16,6 +18,7 @@ def first_register_email(name, email, link):
 	email.content_subtype = "html" 
 	email.send(fail_silently=False)
 
+@shared_task
 def end_register_email(name, email):
 
 	context = {
